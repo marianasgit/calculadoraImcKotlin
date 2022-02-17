@@ -5,6 +5,12 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import java.text.DecimalFormat
+
+private lateinit var nomeEditText: EditText
+private lateinit var pesoEditText: EditText
+private lateinit var alturaEditText: EditText
+
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -15,27 +21,49 @@ class MainActivity : AppCompatActivity() {
 
         calcular.setOnClickListener {
 
-            val nome = findViewById<EditText>(R.id.nome).text.toString()
-            val peso = findViewById<EditText>(R.id.peso).text.toString().toDouble()
-            val altura = findViewById<EditText>(R.id.altura).text.toString().toDouble()
             val resultado = findViewById<TextView>(R.id.resultado)
 
-            val imc = peso / (altura * altura)
+            nomeEditText = findViewById(R.id.nome)
+            pesoEditText = findViewById(R.id.peso)
+            alturaEditText = findViewById(R.id.altura)
 
-            if (imc < 18.5) {
-                resultado.text = "${nome}, seu IMC é ${imc} e você está abaixo do peso!"
-            } else if (imc < 25) {
-                resultado.text = "${nome}, seu IMC é ${imc} e você está com o peso ideal!"
-            } else if (imc < 30) {
-                resultado.text = "${nome}, seu IMC é ${imc} e você está acima do peso"
-            } else if (imc < 35) {
-                resultado.text = "${nome}, seu IMC é ${imc} e você está com Obesidade Grau I"
-            } else if (imc < 40) {
-                resultado.text = "${nome}, seu IMC é ${imc} e você está com obesidade Grau II"
-            } else {
-                resultado.text = "${nome}, seu IMC é ${imc} e você está com Obesidade Grau III"
+            if (validarCampos()){
+
+                val nome = nomeEditText.text.toString()
+                val peso = pesoEditText.text.toString().toDouble()
+                val altura = alturaEditText.text.toString().toDouble()
+
+                val imc = calcularIMC(peso, altura)
+
+                val classificacao = situacaoIMC(imc)
+
+               resultado.text = "${nome}, seu IMC é ${dec.format(imc)} e ${classificacao} "
             }
+
+
         }
 
     }
+
+    private fun validarCampos(): Boolean{
+        var noError = true
+
+        if (nomeEditText.text.isBlank()) {
+            nomeEditText.setError("Digite seu nome!")
+            noError = false
+        }
+
+        if (pesoEditText.text.isBlank()) {
+            pesoEditText.setError("Digite seu peso!")
+            noError = false
+        }
+
+        if (alturaEditText.text.isBlank()) {
+            alturaEditText.setError("Digite sua altura!")
+            noError = false
+        }
+
+        return noError
+    }
+
 }

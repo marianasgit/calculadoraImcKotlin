@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="50dp"
         android:text="Calculadora - IMC!"
-        android:textSize="36sp"/>
+        android:textSize="36sp" />
 
     <EditText
         android:id="@+id/nome"
@@ -51,8 +51,9 @@
 
     <TextView
         android:id="@+id/resultado"
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:text=" "/>
+        android:text=" "
+        android:textSize="26sp"/>
 
 </LinearLayout>
