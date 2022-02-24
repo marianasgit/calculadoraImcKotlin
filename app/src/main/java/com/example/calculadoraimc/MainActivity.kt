@@ -1,5 +1,6 @@
 package com.example.calculadoraimc
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -21,8 +22,6 @@ class MainActivity : AppCompatActivity() {
 
         calcular.setOnClickListener {
 
-            val resultado = findViewById<TextView>(R.id.resultado)
-
             nomeEditText = findViewById(R.id.nome)
             pesoEditText = findViewById(R.id.peso)
             alturaEditText = findViewById(R.id.altura)
@@ -37,7 +36,17 @@ class MainActivity : AppCompatActivity() {
 
                 val classificacao = situacaoIMC(imc)
 
-               resultado.text = "${nome}, seu IMC é ${dec.format(imc)} e ${classificacao} "
+                 val resultado = "${nome}, seu IMC é ${dec.format(imc)} e ${classificacao}"
+
+                val intent = Intent(this, RelatorioActivity::class.java)
+
+                intent.putExtra("peso", "${peso}")
+                intent.putExtra("altura", "${altura}")
+                intent.putExtra("resultado", "${resultado}")
+
+                startActivity(intent)
+
+               //resultado.text = "${nome}, seu IMC é ${dec.format(imc)} e ${classificacao} "
             }
 
 
